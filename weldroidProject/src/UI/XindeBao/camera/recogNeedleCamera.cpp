@@ -7,6 +7,7 @@
 #include "DxImageProc.h"
 #include <string>
 #include <thread>
+#include "base/config.h"
 
 using namespace std;
 using namespace std::chrono ;
@@ -64,7 +65,7 @@ void RecogNeedleCamera::connectDevice()
         GX_VERIFY(status);
         if (device_number <= 0)
         {
-            cout<<"Error, 当前无设备连接！"<<endl;
+            cout<<"Error, 识别针尖相机 : 当前无设备连接！"<<endl;
             return;
         }
         if (m_device_handle != NULL)
@@ -143,7 +144,6 @@ GX_STATUS RecogNeedleCamera::InitDevice()
     std::lock_guard<std::recursive_mutex> lck(_mtx);
 
     GX_STATUS status = GX_STATUS_SUCCESS;
-    //    Config _sys_config("etc/sys.info");
     //设置采集模式连续采集
     status = GXSetEnum(m_device_handle,GX_ENUM_ACQUISITION_MODE, GX_ACQ_MODE_CONTINUOUS);
     VERIFY_STATUS_RET(status);
@@ -169,9 +169,13 @@ GX_STATUS RecogNeedleCamera::InitDevice()
         status = GXSetEnum(m_device_handle, GX_ENUM_BALANCE_WHITE_AUTO, GX_BALANCE_WHITE_AUTO_OFF);
         GX_VERIFY(status);
     }
+    //设置曝光
+    Config _sys_config("etc/sys.info");
+    int exposure = _sys_config.get<int>("RecogNeedleCamera.Exposure",0);
+    setExposure(exposure);
+
     return status;
 }
-
 
 GX_STATUS RecogNeedleCamera::SetPixelFormat8bit()
 {
@@ -432,7 +436,7 @@ void RecogNeedleCamera::ShowErrorString(GX_STATUS error_status)
     }
     else
     {
-        cout <<"Error "<<error_info<<endl;;
+        cout <<"Error ,识别针尖相机 : "<<error_info<<endl;;
     }
 
     if (NULL != error_info)
@@ -442,17 +446,17 @@ void RecogNeedleCamera::ShowErrorString(GX_STATUS error_status)
     }
 }
 
-void RecogNeedleCamera::setExposureTime(int exposureValue)
+void RecogNeedleCamera::setExposure(int exposure)
 {
     std::lock_guard<std::recursive_mutex> lck(_mtx);
     if(m_device_handle == nullptr)
         return;
     GX_STATUS status = GX_STATUS_SUCCESS;
-    status = GXSetFloat(m_device_handle, GX_FLOAT_EXPOSURE_TIME,exposureValue );
+    status = GXSetFloat(m_device_handle, GX_FLOAT_EXPOSURE_TIME,exposure );
     GX_VERIFY(status);
 }
 
-void RecogNeedleCamera::setGain( float f )
+void RecogNeedleCamera::setGain( float gain )
 {
     std::lock_guard<std::recursive_mutex> lck(_mtx) ;
     if(m_device_handle == nullptr)
@@ -461,11 +465,11 @@ void RecogNeedleCamera::setGain( float f )
     status = GXSetEnum(m_device_handle, GX_ENUM_GAIN_SELECTOR, GX_GAIN_SELECTOR_RED);
     GX_VERIFY(status);
 
-    status = GXSetFloat(m_device_handle, GX_FLOAT_GAIN, f);
+    status = GXSetFloat(m_device_handle, GX_FLOAT_GAIN, gain);
     GX_VERIFY(status);
 }
 
-void RecogNeedleCamera::setRoi( float a, float b,int c,int d)
+void RecogNeedleCamera::setRoi( float offsetX, float offsetY,int width,int height)
 {
     std::lock_guard<std::recursive_mutex> lck(_mtx) ;
     if(m_device_handle == nullptr)
@@ -476,12 +480,12 @@ void RecogNeedleCamera::setRoi( float a, float b,int c,int d)
     status = GXGetIntRange(m_device_handle, GX_INT_WIDTH, &stIntRange);
     cout<<"width.range max = "<<stIntRange.nMax<<" , min = "<<stIntRange.nMin<<endl;
 
-    status = GXSetInt(m_device_handle, GX_INT_WIDTH, c);
+    status = GXSetInt(m_device_handle, GX_INT_WIDTH, width);
     GX_VERIFY(status);
-    status = GXSetInt(m_device_handle, GX_INT_HEIGHT, d);
+    status = GXSetInt(m_device_handle, GX_INT_HEIGHT, height);
     GX_VERIFY(status);
-    status = GXSetInt(m_device_handle, GX_INT_OFFSET_X, a);
+    status = GXSetInt(m_device_handle, GX_INT_OFFSET_X, offsetX);
     GX_VERIFY(status);
-    status = GXSetInt(m_device_handle, GX_INT_OFFSET_Y, b);
+    status = GXSetInt(m_device_handle, GX_INT_OFFSET_Y, offsetY);
     GX_VERIFY(status);
 }

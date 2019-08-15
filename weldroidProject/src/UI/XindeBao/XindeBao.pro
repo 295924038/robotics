@@ -90,5 +90,5 @@ HEADERS += \
 
 FORMS += \
         mainwindow.ui \
-        preferences.ui \
-    Input/input.ui
+    Input/input.ui \
+    preferences.ui

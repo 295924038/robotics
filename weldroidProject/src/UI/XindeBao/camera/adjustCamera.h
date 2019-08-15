@@ -62,13 +62,11 @@ public:
 
     void ShowErrorString(GX_STATUS );
 
-    void setRoi( float a, float b,int c,int d);
+    void setRoi( float offsetX, float offsetY,int width,int height);
 
-    void initRoi();
+    void setGain( float gain ) ;
 
-    void setGain( float f ) ;
-
-    void setExposure( int e ) ;
+    void setExposure( int exposure ) ;
     /// 为显示图像准备资源
     bool PrepareForShowImg();
     /// 为彩色图像显示准备资源,分配Buffer
@@ -79,8 +77,6 @@ public:
     void UnPrepareForShowImg();
 
     GX_FRAME_DATA getFrameDate();
-
-    void setExposureTime(int);
 
 private:
     GX_DEV_HANDLE  m_device_handle;

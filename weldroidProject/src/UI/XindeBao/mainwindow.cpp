@@ -19,6 +19,8 @@ using namespace cv;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     _adjustCamera_ptr(Singleton<AdjustCamera>::get()),
+    _recogNeedleCamera_ptr(Singleton<RecogNeedleCamera>::get()),
+    _recogWeldCamera_ptr(Singleton<RecogWeldCamera>::get()),
     m_weldCamera_open(false),
     m_needleCamera_open(false),
     btakeWeldPictures(false),

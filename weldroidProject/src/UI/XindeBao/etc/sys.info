@@ -1,0 +1,40 @@
+
+
+AdjustCamera
+{
+	Exposure
+	Gain
+	AOI
+	{
+	   OffsetX
+	   OffsetY
+	   Width
+	   Height
+	}
+}
+
+RecogNeedleCamera
+{
+	Exposure
+	Gain
+	AOI
+	{
+	   OffsetX
+	   OffsetY
+	   Width
+	   Height
+	}
+}
+RecogWeldCamera
+{
+	Exposure
+	Gain
+	AOI
+	{
+	   OffsetX
+	   OffsetY
+	   Width
+	   Height
+	}
+}
+
