@@ -1,0 +1,46 @@
+#Image ROI
+ROI_X    160
+ROI_Y    100
+ROI_WIDTH  560
+ROI_HEIGHT 240
+
+#which detector to use
+#0: basic threshold: for good s/n images
+#1: peak finder: for thin lines
+#2: matched filter for line
+LASER_DETECTOR_TYPE  0
+
+#0: intersection seam detector
+#1: line break seam detector
+#2: skeleton seam detector
+SEAM_DETECTOR_TYPE  1
+
+#Simple threshold detector threshold
+THRESH_THRESH      180
+
+#peak detector threshold
+PEAK_THRESH        30
+#PEAK_LOCALMAX      0
+
+#line detector threshold
+LINE_ANGLE         0
+LINE_THICKNESS     1
+LINE_THRESH        100     
+
+#line analysis parameters
+ANGLE_BIN_SIZE     10
+
+#minimum distance between two dominant angle groups
+MIN_GROUP_DISTANCE 1
+
+#approximate line direction 0 horizontal, 1 vertical
+LINE_DIRECTION     0
+
+#edge detection threshold
+DO_EDGE_DETECTION      0
+EDGE_LOW_THRESHOLD     60
+EDGE_HIGH_THRESHOLD    230
+
+
+
+

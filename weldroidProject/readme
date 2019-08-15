@@ -1,0 +1,33 @@
+作用：指定生成的目标文件，所依赖的中间文件(.o)，所依赖的库文件，自动生成最终目标文件
+具体如下:
+1、请先定义PROROOT环境变量、在mak/mkcore.mak文件中定义通用头文件路径、库路径、生成路径
+2、每个模块可生成多个目标(一般只生成一个，多个用于做测试案例用)，参考mak/make.sh
+3、使用时将相应的模板文件(./make.sh)拷贝到自己的模块下[cpmake]，参照模板的写法修改
+4、编译支持: /make.sh debug(相当于默认./make.sh)  调试版
+            ./make.sh release                     发行版
+            ./make.sh clean                       清理
+            例./make.sh、./make.sh clean、./make.sh clean debug(清理后再生成调试版)
+5、每增加一个模块后要在mak/mkall.sh中添加相应的处理，参照之前的例子，添加时注意顺序，基础库要先编译，以便可以进行整个项目的编译
+
+做完上述步骤，编译时只要当前路径下有make.sh就可以进行编译，可生成静态库、动态库、执行码的调试版和发行版两种格式
+***********************
+|具体参考[src]下的例子|
+***********************
+
+#目录结构
+src 源代码
+etc 配置文件
+mak make的模板及脚本
+log 日志
+lib 动态库、静态库
+bin 可执行文件
+include 头文件
+
+#切换git用户，每个人应使用独立的账户，不应共享账户
+$ git config --global user.name "Your Name"
+$ git config --global user.email "email@example.com"
+
+#分支说明
+master：主分支，禁止未授权的push操作
+algo：算法组开发分支
+soft：软件组开发分支

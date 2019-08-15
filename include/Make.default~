@@ -1,0 +1,3 @@
+CC=g++
+CFLAGS=-I$(LOCAL_INCLUDES) -I../local/include -O3  -std=c++11
+LDFLAGS=-L$(LOCAL_LIBS) -L../local/lib -lnlopt

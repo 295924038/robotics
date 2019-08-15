@@ -1,0 +1,1 @@
+-ggdb3 -mavx2 -L/home/td/boost1640/lib/debug 

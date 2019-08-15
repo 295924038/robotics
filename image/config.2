@@ -1,0 +1,68 @@
+#Image ROI
+#ROI_X    680
+#ROI_Y    250
+#ROI_WIDTH   270
+#ROI_HEIGHT  300
+ROI_X  0
+ROI_Y  0
+ROI_WIDTH  1280
+ROI_HEIGHT 1024
+
+#which detector to use
+#0: basic threshold: for good s/n images
+#1: peak finder: for thin lines
+#2: matched filter for line
+#3: peak1d detector for line
+LASER_DETECTOR_TYPE  3
+
+#0: intersection seam detector
+#1: line break seam detector
+SEAM_DETECTOR_TYPE  1
+
+#Simple threshold detector threshold
+THRESH_THRESH      20
+
+#peak detector threshold
+PEAK_THRESH         5
+#PEAK_LOCALMAX      0
+
+#line detector threshold
+LINE_ANGLE         0
+LINE_THICKNESS     1
+LINE_THRESH        10    
+
+#peak1d threshold 
+PEAK1D_THRESH   10
+
+#line analysis parameters
+ANGLE_BIN_SIZE     10
+
+#minimum distance between two dominant angle groups
+MIN_GROUP_DISTANCE 1
+
+#approximate line direction 0 horizontal, 1 vertical
+LINE_DIRECTION     0
+
+#edge detection threshold
+DO_EDGE_DETECTION      0
+EDGE_LOW_THRESHOLD     60
+EDGE_HIGH_THRESHOLD    230
+
+#contour detector
+# minimum lenghth of  tails
+MIN_TAIL_SIZE    40
+# gaussian filter size
+GAUSSIAN_SIZE    9
+# if there is tail on left
+TAIL_ON_LEFT     0
+# if there is tail on right
+TAIL_ON_RIGHT    1
+# minimum number of contour points
+THRESH_CONTOUR_POINTS   50
+# percentage of distance to border for line left/right determination
+#  for example 10 means adding 10% of width to border 0 and if left
+# of contour is larger than that its considered a left line
+CONTOUR_LIMIT        10
+
+
+LINE_MODEL_DISTANCE_THRESH   7

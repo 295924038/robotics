@@ -1,0 +1,41 @@
+PROJ_HOME=$(HOME_DIR)/robotics
+CC=g++
+
+.PHONY:  dirs
+
+default: dirs 
+BIN=./bin
+dirs: $(BIN)
+$(BIN):
+	mkdir $(BIN)
+
+BASIC_INC = -I$(PROJ_HOME)/basic 
+IMAGE_INC = -I$(PROJ_HOME)/image  
+3DVISION_INC = -I$(PROJ_HOME)/3dvision
+OPENCV_INC = -I$(OPENCV_HOME)/include 
+PCL_INC = -I/usr/local/include/pcl-1.8 -I/usr/include/flann
+VTK_INC = -I/usr/include/vtk-6.2
+BASIC_LIB = -L$(PROJ_HOME)/basic/bin -lbasic
+GEOMETRY_LIB = -L$(PROJ_HOME)/geometry/bin -lgeometry
+IMAGE_LIB =  -L$(PROJ_HOME)/image/bin -limage
+3DVISION_LIB  = -L$(PROJ_HOME)/3dvision/bin -l3dvision
+#OPENCV_LIB = -L/usr/lib/x86_64-linux-gnu -lopencv_core -lopencv_features2d -lopencv_ml -lopencv_video -lopencv_objdetect -lopencv_imgproc -lopencv_highgui
+OPENCV_LIB = -L$(OPENCV_HOME)/lib -lopencv_core -lopencv_features2d -lopencv_ml -lopencv_video -lopencv_videoio -lopencv_objdetect -lopencv_tracking -lopencv_imgproc -lopencv_highgui -lopencv_imgcodecs
+OPENCV_CUDALIB = -L/usr/local/lib -lopencv_cudabgsegm -lopencv_cudaobjdetect -lopencv_cudastereo -lopencv_stitching -lopencv_cudafeatures2d -lopencv_superres -lopencv_cudacodec -lopencv_videostab -lopencv_cudaoptflow -lopencv_cudalegacy -lopencv_cudawarping -lopencv_aruco -lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_dpm -lopencv_freetype -lopencv_fuzzy -lopencv_hdf -lopencv_line_descriptor -lopencv_optflow -lopencv_reg -lopencv_saliency -lopencv_stereo -lopencv_structured_light -lopencv_phase_unwrapping -lopencv_rgbd -lopencv_viz -lopencv_surface_matching -lopencv_tracking -lopencv_datasets -lopencv_text -lopencv_face -lopencv_plot -lopencv_dnn -lopencv_xfeatures2d -lopencv_shape -lopencv_video -lopencv_ximgproc -lopencv_calib3d -lopencv_features2d -lopencv_flann -lopencv_xobjdetect -lopencv_objdetect -lopencv_ml -lopencv_xphoto -lopencv_highgui -lopencv_videoio -lopencv_photo -lopencv_imgcodecs -lopencv_cudaimgproc -lopencv_cudafilters -lopencv_imgproc -lopencv_cudaarithm -lopencv_core -lopencv_cudev
+VKT_LIB = -L/usrlib/libvtkWrappingTools-6.2.a
+PCL_LIB = -L/usr/local/lib -lpcl_surface -lpcl_kdtree -lpcl_search -lpcl_common -lpcl_features -lpcl_common -lpcl_io -lpcl_io_ply
+FLANN_LIB = -L/usr/lib/x86_64-linux-gnu -lflann
+BOOST_LIB = -lboost_system
+CFLAGS=$(LOCAL_INC) -I$(PROJ_HOME)/local/include -I./  -O3 -std=c++11
+AVXFLAGS= -mavx2
+LDFLAGS=$(LOCAL_LIB) $(EXTRA_LIB) -L$(PROJ_HOME)/local/lib -lnlopt 
+ALL_OBJS = $(LIB_OBJ) $(EXEC_OBJ)
+BUILD_LIB_OBJ = $(addprefix $(BIN)/, $(LIB_OBJ))
+
+clean: 
+	rm -rf $(BIN)
+
+$(BIN)/%.o:  %.cc $(DEPS)
+	$(CC) -g $(CFLAGS) -c -o $@ $< 
+$(BIN)/%avx2.o:  %avx2.cc $(DEPS)
+	$(CC) -g $(CFLAGS) $(AVXFLAGS)  -c -o $@ $< 
