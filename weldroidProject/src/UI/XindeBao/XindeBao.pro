@@ -72,11 +72,11 @@ SOURCES += \
     camera/adjustCamera.cpp \
     camera/recogNeedleCamera.cpp \
     camera/recogWeldCamera.cpp \
-    motor/motor1.cpp \
-    motor/motor2.cpp \
     interface.cpp \
     loginon.cpp \
-    input.cpp
+    input.cpp \
+    motor/motorx.cpp \
+    motor/motorz.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -86,11 +86,11 @@ HEADERS += \
     camera/adjustCamera.h \
     camera/recogNeedleCamera.h \
     camera/recogWeldCamera.h \
-    motor/motor1.h \
-    motor/motor2.h \
     interface.h \
     loginon.h \
-    input.h
+    input.h \
+    motor/motorx.h \
+    motor/motorz.h
 
 FORMS += \
         mainwindow.ui \
