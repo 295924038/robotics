@@ -1,38 +1,24 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "pubfunc/mylineedit.h"
-#include "Input/input.h"
-#include <opencv2/opencv.hpp>
+#include "input.h"
 #include <iostream>
-#include <boost/filesystem.hpp>
-#include <boost/date_time.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <QTimer>
-#include <thread>
-
+#include "interface.h"
+#include "preferences.h"
 
 using namespace std;
-using namespace boost;
-using namespace cv;
 
+int user = role::consumer;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    _adjustCamera_ptr(Singleton<AdjustCamera>::get()),
-    _recogNeedleCamera_ptr(Singleton<RecogNeedleCamera>::get()),
-    _recogWeldCamera_ptr(Singleton<RecogWeldCamera>::get()),
-    m_weldCamera_open(false),
-    m_needleCamera_open(false),
-    btakeWeldPictures(false),
-    btakeNeedlePictures(false),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->lineE_caliber->setAlignment(Qt::AlignCenter);
-    ui->picture_weld->setScaledContents(true);
-    ui->picture_needle->setScaledContents(true);
-    qTimer = new QTimer(this);
-    connect(ui->lineE_caliber, SIGNAL(clicked()), this, SLOT(lineE_caliber_clicked()));
+    tabwidget = ui->weldingProject;
+    _interfaceUI = new interface(NULL,this);
+    _preferencesUI = new Preferences;
+    updateMenu();
 }
 
 MainWindow::~MainWindow()
@@ -40,144 +26,100 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_btn_startWelding_clicked()
-{
 
-}
-
-void MainWindow::lineE_caliber_clicked()
+void changeCurrentUser(const QString& strRole)
 {
-    Input input(NULL,this);
-    input.show();
-    input.exec();
-}
-
-void MainWindow::update_lineE_caliber(std::string input)
-{
-    ui->lineE_caliber->setText(QString::fromStdString(input));
-}
-
-void MainWindow::on_openWeldCamera_clicked()
-{
-    if(!m_weldCamera_open)
+    cout<<"before , user :"<<user<<endl;
+    if( 0 == strRole.toStdString().compare("普通用户"))
     {
-        QObject::connect(qTimer, SIGNAL(timeout()),this, SLOT(showWeldPicture())) ;
-        qTimer->start(100);
-        m_weldCamera_open = true;
+        user = role::consumer;
     }
-}
-
-void MainWindow::showWeldPicture()
-{
-    cv::Mat mat = _recogWeldCamera_ptr->getImg();
-    ui->picture_weld->setPixmap(QPixmap::fromImage(*((QImage*)(_recogWeldCamera_ptr->m_show_image))));
-}
-
-void MainWindow::on_closeWeldCamera_clicked()
-{
-    if(m_weldCamera_open)
+    if( 0 == strRole.toStdString().compare("专家模式"))
     {
-        qTimer->stop();
-        QObject::disconnect(qTimer, SIGNAL(timeout()),this, SLOT(showWeldPicture())) ;
+        user = role::admin;
     }
-
-    _recogWeldCamera_ptr->disconnectDevice();
-    m_weldCamera_open = false;
-}
-
-void MainWindow::on_takeWeldPicture_clicked()
-{
-    std::thread([this]{
-        btakeWeldPictures = true;
-        while(btakeWeldPictures)
-        {
-            auto mat = _recogWeldCamera_ptr->takePicture();
-            saveImg(mat);
-        }
-    }).detach();
-}
-
-void saveImg(const cv::Mat &mat, const string &path, const string &name)
-{
-    namespace bf = boost::filesystem ;
-    using namespace std ;
-    string strDir = "picture" ;
-    boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() ;
-    // 以当前时间为默认图片文件名
-    string strName = boost::posix_time::to_iso_string(pt) + ".jpg";
-    if ( "" != path ) {
-        strDir = path ;
-    }
-    if ( "" != name ) {
-        strName = name ;
-    }
-    if ( !mat.data ) return ;
-
-    if ( !bf::exists(strDir) ) {
-        bf::create_directory(strDir);
-    }
-    imwrite(strDir + "/" + strName , mat) ;
-}
-
-void MainWindow::on_stopWeldTake_clicked()
-{
-    btakeWeldPictures = false;
-}
-
-void MainWindow::on_takeWeld_clicked()
-{
-    auto mat = _recogWeldCamera_ptr->takePicture();
-    saveImg(mat);
-}
-
-
-void MainWindow::on_openNeedleCamera_clicked()
-{
-    if(!m_needleCamera_open)
+    if(0 == strRole.toStdString().compare("厂家模式"))
     {
-        QObject::connect(qTimer, SIGNAL(timeout()),this, SLOT(showNeedlePicture())) ;
-        qTimer->start(100);
-        m_needleCamera_open = true;
+        user = role::root;
     }
-}
+    cout<<"after , user :"<<user<<endl;
 
-void MainWindow::showNeedlePicture()
-{
-    cv::Mat mat = _recogNeedleCamera_ptr->getImg();
-    ui->picture_needle->setPixmap(QPixmap::fromImage(*((QImage*)(_recogNeedleCamera_ptr->m_show_image))));
 }
-
-void MainWindow::on_closeNeedleCamera_clicked()
+std::string getCurrentRole()
 {
-    if(m_needleCamera_open)
+    string currRole;
+    switch (user)
     {
-        qTimer->stop();
-        QObject::disconnect(qTimer, SIGNAL(timeout()),this, SLOT(showNeedlePicture())) ;
+    case 0:
+        currRole = "普通用户";
+        break;
+    case 1:
+        currRole = "专家模式";
+        break;
+    case 2:
+        currRole = "厂家模式";
+        break;
+    default:
+        break;
+    }
+    return currRole;
+}
+
+int getEqualUser(const QString& strRole)
+{
+    int iUser = 0;
+    if( 0 == strRole.toStdString().compare("普通用户"))
+    {
+        iUser = role::consumer;
+    }
+    if( 0 == strRole.toStdString().compare("专家模式"))
+    {
+        iUser = role::admin;
+    }
+    if(0 == strRole.toStdString().compare("厂家模式"))
+    {
+        iUser = role::root;
+    }
+    return iUser;
+
+}
+
+void MainWindow::inputShow()
+{
+    //    keyboardUI->setWindowFlags(Qt::WindowStaysOnTopHint);
+    //    keyboardUI->show();
+    //    keyboardUI->exec();
+}
+
+
+void MainWindow::updatePasswdInput()
+{
+    //    ui->passwdInput->setText(keyboardUI->inputVal);
+}
+
+
+void MainWindow::closeWindow()
+{
+    this->close();
+}
+
+
+void MainWindow::updateMenu()
+{
+    cout<<"updateMenu"<<endl;
+    auto tabCount = tabwidget->count();
+    cout<<"before ,tabCount"<<tabCount<<endl;
+
+    tabwidget->clear();
+    if(user == role::consumer)
+    {
+        tabwidget->addTab(_interfaceUI,"自动焊接");
+    }
+    if(user == role::admin || user == role::root)
+    {
+        tabwidget->addTab(_interfaceUI,"自动焊接");
+        tabwidget->addTab(_preferencesUI,"参数调整");
     }
 
-    _recogNeedleCamera_ptr->disconnectDevice();
-    m_needleCamera_open = false;
-}
-
-void MainWindow::on_takeNeedlePicture_clicked()
-{
-    std::thread([this]{
-        btakeNeedlePictures = true;
-        while(btakeNeedlePictures)
-        {
-            auto mat = _recogNeedleCamera_ptr->takePicture();
-            saveImg(mat);
-        }
-    }).detach();
-}
-
-void MainWindow::on_stopNeedleTake_clicked()
-{
-    btakeNeedlePictures = false;
-}
-
-void MainWindow::on_takeNeedle_clicked()
-{
-    auto mat = _recogNeedleCamera_ptr->takePicture();
-    saveImg(mat);
+    cout<<"after ,tabCount"<< tabwidget->count()<<endl;
 }

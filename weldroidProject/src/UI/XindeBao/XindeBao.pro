@@ -67,28 +67,34 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         preferences.cpp \
-    Input/input.cpp \
     pubfunc/imagelabel.cpp \
     pubfunc/mylineedit.cpp \
     camera/adjustCamera.cpp \
     camera/recogNeedleCamera.cpp \
     camera/recogWeldCamera.cpp \
     motor/motor1.cpp \
-    motor/motor2.cpp
+    motor/motor2.cpp \
+    interface.cpp \
+    loginon.cpp \
+    input.cpp
 
 HEADERS += \
         mainwindow.h \
         preferences.h \
-    Input/input.h \
     pubfunc/imagelabel.h \
     pubfunc/mylineedit.h \
     camera/adjustCamera.h \
     camera/recogNeedleCamera.h \
     camera/recogWeldCamera.h \
     motor/motor1.h \
-    motor/motor2.h
+    motor/motor2.h \
+    interface.h \
+    loginon.h \
+    input.h
 
 FORMS += \
         mainwindow.ui \
-    Input/input.ui \
-    preferences.ui
+    preferences.ui \
+    interface.ui \
+    loginon.ui \
+    input.ui

@@ -2,19 +2,19 @@
 #define INPUT_H
 
 #include <QDialog>
-#include <mainwindow.h>
+#include <interface.h>
 
 namespace Ui {
 class Input;
 }
-class MainWindow;
+class interface;
 
 class Input : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Input(QWidget *parent = 0,MainWindow* mainwind = 0);
+    explicit Input(QWidget *parent = 0,interface* inter = 0);
     ~Input();
 
 private slots:
@@ -56,7 +56,7 @@ public:
 
 private:
     Ui::Input *ui;
-    MainWindow *mw;
+    interface *f;
 };
 
 #endif // INPUT_H

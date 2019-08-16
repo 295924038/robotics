@@ -19,7 +19,7 @@
      <x>20</x>
      <y>20</y>
      <width>201</width>
-     <height>231</height>
+     <height>271</height>
     </rect>
    </property>
    <property name="title">
@@ -31,7 +31,7 @@
       <x>10</x>
       <y>30</y>
       <width>181</width>
-      <height>191</height>
+      <height>231</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -43,7 +43,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_3"/>
+      <widget class="QLineEdit" name="le_adjust_exposure"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_4">
@@ -81,19 +81,26 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_4"/>
+      <widget class="QLineEdit" name="le_adjust_gain"/>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_5"/>
+      <widget class="QLineEdit" name="le_adjust_offsetX"/>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_6"/>
+      <widget class="QLineEdit" name="le_adjust_offsetY"/>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="lineEdit_23"/>
+      <widget class="QLineEdit" name="le_adjust_width"/>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="lineEdit_24"/>
+      <widget class="QLineEdit" name="le_adjust_height"/>
+     </item>
+     <item row="6" column="1">
+      <widget class="QPushButton" name="btn_adjust_save">
+       <property name="text">
+        <string>保存</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -104,7 +111,7 @@
      <x>230</x>
      <y>20</y>
      <width>201</width>
-     <height>231</height>
+     <height>271</height>
     </rect>
    </property>
    <property name="title">
@@ -116,7 +123,7 @@
       <x>10</x>
       <y>30</y>
       <width>181</width>
-      <height>191</height>
+      <height>231</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_2">
@@ -163,22 +170,29 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_7"/>
+      <widget class="QLineEdit" name="le_weld_exposure"/>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_8"/>
+      <widget class="QLineEdit" name="le_weld_gain"/>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_9"/>
+      <widget class="QLineEdit" name="le_weld_offsetX"/>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_10"/>
+      <widget class="QLineEdit" name="le_weld_offsetY"/>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="lineEdit_26"/>
+      <widget class="QLineEdit" name="le_weld_width"/>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="lineEdit_25"/>
+      <widget class="QLineEdit" name="le_weld_height"/>
+     </item>
+     <item row="6" column="1">
+      <widget class="QPushButton" name="btn_weld_save">
+       <property name="text">
+        <string>保存</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -189,7 +203,7 @@
      <x>440</x>
      <y>20</y>
      <width>201</width>
-     <height>231</height>
+     <height>271</height>
     </rect>
    </property>
    <property name="title">
@@ -201,7 +215,7 @@
       <x>9</x>
       <y>30</y>
       <width>181</width>
-      <height>191</height>
+      <height>231</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_3">
@@ -248,22 +262,29 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_11"/>
+      <widget class="QLineEdit" name="le_needle_exposure"/>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_12"/>
+      <widget class="QLineEdit" name="le_needle_gain"/>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_13"/>
+      <widget class="QLineEdit" name="le_needle_offsetX"/>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_14"/>
+      <widget class="QLineEdit" name="le_needle_offsetY"/>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="lineEdit_28"/>
+      <widget class="QLineEdit" name="le_needle_width"/>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="lineEdit_27"/>
+      <widget class="QLineEdit" name="le_needle_height"/>
+     </item>
+     <item row="6" column="1">
+      <widget class="QPushButton" name="btn_needle_save">
+       <property name="text">
+        <string>保存</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -272,7 +293,7 @@
    <property name="geometry">
     <rect>
      <x>490</x>
-     <y>294</y>
+     <y>430</y>
      <width>111</width>
      <height>51</height>
     </rect>

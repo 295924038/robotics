@@ -1,13 +1,13 @@
 #include "input.h"
 #include "ui_input.h"
 
-Input::Input(QWidget *parent,MainWindow* mainwind) :
+Input::Input(QWidget *parent,interface* inter) :
     QDialog(parent),
     ui(new Ui::Input)
 {
     ui->setupUi(this);
-    mw = mainwind;
-    connect(this, SIGNAL(sig_inputChanged(std::string)), mw, SLOT(update_lineE_caliber(std::string)));
+    f = inter;
+    connect(this, SIGNAL(sig_inputChanged(std::string)), f, SLOT(update_lineE_caliber(std::string)));
     m_number = "";//need correct
 }
 

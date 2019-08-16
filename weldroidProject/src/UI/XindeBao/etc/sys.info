@@ -2,7 +2,7 @@
 
 AdjustCamera
 {
-	Exposure
+	Exposure 5000
 	Gain
 	AOI
 	{
@@ -15,7 +15,7 @@ AdjustCamera
 
 RecogNeedleCamera
 {
-	Exposure
+	Exposure 5000
 	Gain
 	AOI
 	{
@@ -27,7 +27,7 @@ RecogNeedleCamera
 }
 RecogWeldCamera
 {
-	Exposure
+	Exposure 5000
 	Gain
 	AOI
 	{
