@@ -7,14 +7,14 @@
 namespace Ui {
 class Input;
 }
-class interface;
 
 class Input : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Input(QWidget *parent = 0,interface* inter = 0);
+    explicit Input(QWidget *parent = 0,QWidget* w = 0);
+    explicit Input(QWidget *parent = 0,QDialog* d = 0);
     ~Input();
 
 private slots:
@@ -47,6 +47,7 @@ private slots:
 
     void on_btn_clearAll_clicked();
 
+    void updateInput();
 
 signals:
     void sig_inputChanged(std::string userInput);
@@ -56,7 +57,9 @@ public:
 
 private:
     Ui::Input *ui;
-    interface *f;
+    QWidget* interW;
+    QDialog* interD;
+//    interface *f;
 };
 
 #endif // INPUT_H

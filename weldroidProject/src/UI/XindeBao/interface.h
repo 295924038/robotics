@@ -31,7 +31,7 @@ private slots:
 
     void lineE_caliber_clicked();
 
-    void update_lineE_caliber(std::string input);
+    void update_LineEdit(std::string number);
 
     void on_openWeldCamera_clicked();
 

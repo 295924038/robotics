@@ -21,9 +21,9 @@ signals:
 
 private slots:
 
-    void inputShow();
+    void showInputUI();
 
-    void updateInPutLine();
+    void update_LineEdit(std::string number);
 
     void on_btn_loginOn_clicked();
 
@@ -31,7 +31,7 @@ private slots:
 
 private:
     Ui::LoginOn *ui;
-    Input* inputUI;
+
 };
 
 #endif // LOGINON_H

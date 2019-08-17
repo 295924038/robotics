@@ -57,9 +57,9 @@ void interface::lineE_caliber_clicked()
     input.exec();
 }
 
-void interface::update_lineE_caliber(std::string input)
+void interface::update_LineEdit(std::string number)
 {
-    ui->lineE_caliber->setText(QString::fromStdString(input));
+    ui->lineE_caliber->setText(QString::fromStdString(number));
 }
 
 void interface::on_openWeldCamera_clicked()

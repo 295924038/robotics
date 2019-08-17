@@ -75,8 +75,7 @@ SOURCES += \
     interface.cpp \
     loginon.cpp \
     input.cpp \
-    motor/motorx.cpp \
-    motor/motorz.cpp
+    motor/motor.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -89,8 +88,7 @@ HEADERS += \
     interface.h \
     loginon.h \
     input.h \
-    motor/motorx.h \
-    motor/motorz.h
+    motor/motor.h
 
 FORMS += \
         mainwindow.ui \

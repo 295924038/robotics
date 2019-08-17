@@ -1,15 +1,26 @@
 #include "input.h"
 #include "ui_input.h"
 
-Input::Input(QWidget *parent,interface* inter) :
+Input::Input(QWidget *parent,QWidget* w) :
     QDialog(parent),
     ui(new Ui::Input)
 {
     ui->setupUi(this);
-    f = inter;
-    connect(this, SIGNAL(sig_inputChanged(std::string)), f, SLOT(update_lineE_caliber(std::string)));
+    interW = w;
+    connect(this, SIGNAL(sig_inputChanged(std::string)), interW, SLOT(update_LineEdit(std::string)));
     m_number = "";//need correct
 }
+
+Input::Input(QWidget *parent,QDialog* d) :
+    QDialog(parent),
+    ui(new Ui::Input)
+{
+    ui->setupUi(this);
+    interD = d;
+    connect(this, SIGNAL(sig_inputChanged(std::string)), interD, SLOT(update_LineEdit(std::string)));
+    m_number = "";//need correct
+}
+
 
 Input::~Input()
 {
@@ -18,57 +29,68 @@ Input::~Input()
 
 void Input::on_btn_n0_clicked()
 {
-    emit sig_inputChanged(m_number += "0");
+    m_number += "0";
+    updateInput();
 }
 
 void Input::on_btn_n1_clicked()
 {
-    emit sig_inputChanged(m_number += "1");
+    m_number += "1";
+    updateInput();
 }
 
 void Input::on_btn_n2_clicked()
 {
-    emit sig_inputChanged(m_number += "2");
+    m_number += "2";
+    updateInput();
 }
 
 void Input::on_btn_n3_clicked()
 {
-    emit sig_inputChanged(m_number += "3");
+    m_number += "3";
+    updateInput();
 }
 
 void Input::on_btn_n4_clicked()
 {
-    emit sig_inputChanged(m_number += "4");
+    m_number += "4";
+    updateInput();
 }
 
 void Input::on_btn_n5_clicked()
 {
-    emit sig_inputChanged(m_number += "5");
+    m_number += "5";
+    updateInput();
 }
 
 void Input::on_btn_n6_clicked()
 {
-    emit sig_inputChanged(m_number += "6");
+    m_number += "6";
+    updateInput();
 }
 
 void Input::on_btn_n7_clicked()
 {
-    emit sig_inputChanged(m_number += "7");
+    m_number += "7";
+    updateInput();
 }
 
 void Input::on_btn_n8_clicked()
 {
-    emit sig_inputChanged(m_number += "8");
+    m_number += "8";
+    updateInput();
 }
 
 void Input::on_btn_n9_clicked()
 {
-    emit sig_inputChanged(m_number += "9");
+    m_number += "9";
+    updateInput();
 }
 
 void Input::on_btn_point_clicked()
 {
-    emit sig_inputChanged(m_number += ".");
+    m_number += ".";
+    updateInput();
 }
 
 void Input::on_btn_ok_clicked()
@@ -79,15 +101,19 @@ void Input::on_btn_ok_clicked()
 void Input::on_btn_clearOne_clicked()
 {
     if(m_number.size() > 1)
-    {
-        emit sig_inputChanged(m_number = m_number.substr(0,m_number.size()-1));
-    }else
-    {
-        emit sig_inputChanged(m_number = "");
-    }
+        m_number = m_number.substr(0,m_number.size()-1);
+    else
+        m_number = "";
+    updateInput();
 }
 
 void Input::on_btn_clearAll_clicked()
 {
-    emit sig_inputChanged(m_number = "");
+    m_number = "";
+    updateInput();
+}
+
+void Input::updateInput()
+{
+    emit sig_inputChanged(m_number);
 }

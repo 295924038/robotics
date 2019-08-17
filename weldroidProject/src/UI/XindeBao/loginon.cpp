@@ -18,6 +18,7 @@ LoginOn::LoginOn(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle("用户登录");
     ui->le_pwdInput->setEchoMode(QLineEdit::Password);
+    connect(ui->le_pwdInput, SIGNAL(clicked()), this, SLOT(showInputUI()));
 }
 
 LoginOn::~LoginOn()
@@ -49,14 +50,16 @@ void LoginOn::on_btn_exit_clicked()
 }
 
 
-void LoginOn::inputShow()
+void LoginOn::showInputUI()
 {
+    Input* inputUI = new Input(NULL,this);
     inputUI->setWindowFlags(Qt::WindowStaysOnTopHint);
     inputUI->show();
     inputUI->exec();
+    delete inputUI;
 }
 
-void LoginOn::updateInPutLine()
+void LoginOn::update_LineEdit(string number)
 {
-    ui->le_pwdInput->setText(QString::fromStdString(inputUI->m_number));
+    ui->le_pwdInput->setText(QString::fromStdString(number));
 }
