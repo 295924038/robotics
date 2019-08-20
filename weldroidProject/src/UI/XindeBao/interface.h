@@ -69,7 +69,12 @@ signals:
 
     void changeSeam();
 
+    void sig_close();
 
+public:
+    int welding();
+
+    int trackTip();
 private:
     Ui::interface *ui;
     MainWindow* mainWd;
@@ -77,13 +82,14 @@ private:
     std::shared_ptr<RecogNeedleCamera> _recogNeedleCamera_ptr;
     std::shared_ptr<RecogWeldCamera> _recogWeldCamera_ptr;
     QTimer* qTimer;
-    QImage* m_show_image;
+    //    QImage* m_show_image;
     bool m_weldCamera_open;
     bool m_needleCamera_open;
     bool btakeWeldPictures;
     bool btakeNeedlePictures;
     void* m_result_image;
-    double m_dCaliber;//管径
+    double m_dCaliber;
+    bool m_bWelding;
 };
 
 void saveImg(const cv::Mat &mat, const std::string &path = "", const std::string &name = "");

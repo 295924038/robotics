@@ -16,11 +16,14 @@
   <widget class="ImageLabel" name="picture_needle">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>310</x>
      <y>360</y>
      <width>281</width>
      <height>251</height>
     </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
    </property>
    <property name="text">
     <string/>
@@ -76,7 +79,7 @@
   <widget class="ImageLabel" name="picture_weld">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>20</y>
      <width>581</width>
      <height>591</height>
@@ -142,7 +145,7 @@
      <x>659</x>
      <y>390</y>
      <width>191</width>
-     <height>61</height>
+     <height>64</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">

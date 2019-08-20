@@ -11,6 +11,9 @@
 #include <thread>
 #include "loginon.h"
 #include <stdlib.h>
+#include <future>
+#include "base/errorcode.h"
+
 
 using namespace std;
 using namespace boost;
@@ -27,6 +30,7 @@ interface::interface(QWidget *parent,MainWindow* mw) :
     m_needleCamera_open(false),
     btakeWeldPictures(false),
     btakeNeedlePictures(false),
+    m_bWelding(false),
     ui(new Ui::interface)
 {
     ui->setupUi(this);
@@ -36,6 +40,7 @@ interface::interface(QWidget *parent,MainWindow* mw) :
     ui->picture_needle->setScaledContents(true);
     qTimer = new QTimer(this);
     connect(ui->lineE_caliber, SIGNAL(clicked()), this, SLOT(lineE_caliber_clicked()));
+    connect(this, SIGNAL(sig_close()), mainWd, SLOT(closeWindow()));
 
 }
 
@@ -46,6 +51,30 @@ interface::~interface()
 
 
 void interface::on_btn_startWelding_clicked()
+{
+
+    if(m_bWelding)
+    {
+        m_bWelding = false;
+    }else{
+        m_bWelding = true;
+        std::future<int> f1 = std::async(std::launch::async,&interface::welding,this);
+        std::future<int> f2 = std::async(std::launch::async,&interface::trackTip,this);
+
+
+    }
+
+}
+
+int interface::welding()
+{
+    //初始化参数
+    //串口发送指令，开启继电器
+    //识别焊缝相机，设置焊缝画线
+
+}
+
+int interface::trackTip()
 {
 
 }
@@ -74,8 +103,8 @@ void interface::on_openWeldCamera_clicked()
 
 void interface::showWeldPicture()
 {
-    cv::Mat mat = _recogWeldCamera_ptr->getImg();
-    ui->picture_weld->setPixmap(QPixmap::fromImage(*((QImage*)(_recogWeldCamera_ptr->m_show_image))));
+    cv::Mat mat = _adjustCamera_ptr->getImg();
+    ui->picture_weld->setPixmap(QPixmap::fromImage(*((QImage*)(_adjustCamera_ptr->m_show_image))));
 }
 
 void interface::on_closeWeldCamera_clicked()
@@ -86,7 +115,7 @@ void interface::on_closeWeldCamera_clicked()
         QObject::disconnect(qTimer, SIGNAL(timeout()),this, SLOT(showWeldPicture())) ;
     }
 
-    _recogWeldCamera_ptr->disconnectDevice();
+    _adjustCamera_ptr->disconnectDevice();
     m_weldCamera_open = false;
 }
 
@@ -96,7 +125,7 @@ void interface::on_takeWeldPicture_clicked()
         btakeWeldPictures = true;
         while(btakeWeldPictures)
         {
-            auto mat = _recogWeldCamera_ptr->takePicture();
+            auto mat = _adjustCamera_ptr->takePicture();
             saveImg(mat);
         }
     }).detach();
@@ -131,7 +160,7 @@ void interface::on_stopWeldTake_clicked()
 
 void interface::on_takeWeld_clicked()
 {
-    auto mat = _recogWeldCamera_ptr->takePicture();
+    auto mat = _adjustCamera_ptr->takePicture();
     saveImg(mat);
 }
 
@@ -200,10 +229,10 @@ void interface::on_btn_changeRole_clicked()
 
 void interface::on_btn_quit_clicked()
 {
-    emit close();
+    emit sig_close();
 }
 
 void interface::on_btn_shutDown_clicked()
 {
-//    system("poweroff");
+    //    system("poweroff");
 }

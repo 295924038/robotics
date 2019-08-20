@@ -2,7 +2,13 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <chrono>
 using namespace std;
+
+std::chrono::milliseconds operator"" _ms( unsigned long long t )
+{
+   return std::chrono::milliseconds(t) ;
+}
 
 bool equald( double x, double y )
 {
