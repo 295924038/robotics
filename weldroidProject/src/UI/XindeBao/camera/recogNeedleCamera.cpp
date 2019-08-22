@@ -122,7 +122,6 @@ GX_STATUS RecogNeedleCamera::OpenDevice()
     open_param.accessMode = GX_ACCESS_EXCLUSIVE;
     open_param.openMode   = GX_OPEN_SN;
     open_param.pszContent  = "RH1898008016";
-
     status = GXOpenDevice(&open_param, &m_device_handle);
 
     return status;

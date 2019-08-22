@@ -52,26 +52,74 @@ interface::~interface()
 
 void interface::on_btn_startWelding_clicked()
 {
-
-    if(m_bWelding)
+    //打开相机拍照
+    //电机使能
+    //设置相机曝光
+    if(true)//判断是否正在焊接
     {
-        m_bWelding = false;
+        //已经在焊接，则停止焊接
+        //创建线程，开始焊接
+        //创建线程，跟踪针尖
     }else{
-        m_bWelding = true;
-        std::future<int> f1 = std::async(std::launch::async,&interface::welding,this);
-        std::future<int> f2 = std::async(std::launch::async,&interface::trackTip,this);
-
-
+        //没有焊接，则开始焊接
+        //中断焊接线程
+        //中断跟踪线程
     }
+
+
+
+
+
+
+
+    //    if(m_bWelding)
+    //    {
+    //        m_bWelding = false;
+    //    }else{
+    //        m_bWelding = true;
+    //        std::future<int> f1 = std::async(std::launch::async,&interface::welding,this);
+    //        std::future<int> f2 = std::async(std::launch::async,&interface::trackTip,this);
+
+
+    //    }
 
 }
 
 int interface::welding()
 {
     //初始化参数
-    //串口发送指令，开启继电器
+    //开启继电器
     //识别焊缝相机，设置焊缝画线
+    while(true)
+    {
+        if(true)//是否暂停焊接
+        {
+            break;
+        }else{
+            continue;
+        }
 
+        int weldValue = recogWeld();//看图像识别焊缝
+        if(weldValue == 0)
+        {
+            continue;
+        }
+
+    }
+
+}
+
+double interface::recogWeld()
+{
+    double weldPosition = 0;
+    cv::Mat mat = _recogWeldCamera_ptr->getImg();//获取图片
+    //调用算法算出值
+    //...
+    //...
+    //...
+    //...
+    //...
+    return weldPosition;
 }
 
 int interface::trackTip()

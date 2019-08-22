@@ -74,6 +74,8 @@ signals:
 public:
     int welding();
 
+    double recogWeld();
+
     int trackTip();
 private:
     Ui::interface *ui;
